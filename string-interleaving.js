@@ -74,6 +74,7 @@ function isInterleaving(a, b, c) {
                 b[j - 1] !== c[i + j - 1]) {
                 Mat[i][j] = Mat[i - 1][j]; //or could just say = true, right?
                 // console.log("Mat[", i, "][", j, "] is ", Mat[i][j]);
+                console.log("match");
             }
             else {
                 if (a[i - 1] !== c[i + j - 1] &&
@@ -81,6 +82,7 @@ function isInterleaving(a, b, c) {
                     // console.log("b and c match, a does not");
                     Mat[i][j] = Mat[i][j - 1]; //or could just say = true, right?
                     // console.log("Mat[", i, "][", j, "] is ", Mat[i][j]);
+                    console.log("match");
                 }
                 else {
                     if (a[i - 1] == c[i + j - 1] &&
@@ -88,11 +90,13 @@ function isInterleaving(a, b, c) {
                         // console.log("both are a match");
                         Mat[i][j] = (Mat[i - 1][j] || Mat[i][j - 1]);
                         // console.log("Mat[", i, "][", j, "] is ", Mat[i][j]);
+                        console.log("match");
                     }
                     else {
                         Mat[i][j] = 0;
                         // console.log("This happens if there is no match");
                         // console.log("Mat[", i, "][", j, "] is ", Mat[i][j]);
+                        console.log("no match");
                     }
 
                 }
