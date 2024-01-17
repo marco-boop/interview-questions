@@ -23,18 +23,18 @@ function isInterleaving(a, b, c) {
     Mat[0][0] = true;
 
     //This is the first column in the matrix
+    //if b is empty, then see if a and c are the same
     for (i = 1; i <= M; i++) {
         // console.log(i);
         // console.log("a[i] is ", a[i]);
         // console.log("a[i-1] is ", a[i - 1], " and c[i-1] is ", c[i - 1]);
         // console.log(Mat);
         if (a[i - 1] !== c[i - 1]) {
-            Mat[i][0] = false;
+            Mat[i][0] = 0;
         }
         else {
             Mat[i][0] = Mat[i - 1][0];
-
-        }
+        };
     };
 
     //This is the row column in the matrix
@@ -45,11 +45,11 @@ function isInterleaving(a, b, c) {
         // console.log("b[j-1] is ", b[j - 1], " and c[j-1] is ", c[j - 1]);
         // console.log(Mat);
         if (b[j - 1] !== c[j - 1]) {
-            Mat[0][j] = false;
+            Mat[0][j] = 0;
         }
         else {
             Mat[0][j] = Mat[0][j - 1];
-        }
+        };
     };
 
     // console.log(Mat);
@@ -57,32 +57,42 @@ function isInterleaving(a, b, c) {
     //Now the actual logic for all the other cells
     for (i = 1; i <= M; i++) {
         for (j = 1; j <= N; j++) {
-            console.log("i is ", i, "and j is ", j);
-            console.log("a[i - 1] is ", a[i - 1]);
-            console.log("c[i - 1] is ", c[i - 1]);
-            console.log("b[j - 1] is ", b[j - 1]);
-            console.log("c[j - 1] is ", c[j - 1]);
+            // console.log("i is ", i, "and j is ", j);
+            // console.log("i is ", i);
+            // console.log("j is ", j);
+            // console.log("a[i - 1] is ", a[i - 1]);
+            // console.log("c[i - 1] is ", c[i - 1]);
+            // console.log("b[j - 1] is ", b[j - 1]);
+            // console.log("c[j - 1] is ", c[j - 1]);
+            // console.log("i + j - 1 is ", i + j - 1);
+            // console.log("c[i + j - 1] is ", c[i + j - 1]);
 
-            if (a[i - 1] == c[i - 1] &&
-                b[j - 1] !== c[j - 1]) {
-                console.log("a and c match, b does not");
-                Mat[i][j] = Mat[i - 1][j];
+            //This is where my error was pay attention
+            //See if the current char for a or b matches the current char for c
+            console.log("Right now, we are comparing if the (", i - 1, ")th character from ", a, ", which is ", a[i - 1], ", is a match to the (", i + j - 1, ",)th character from ", c, ", which is ", c[i + j - 1], " or if the (", j - 1, ")th character from ", b, ", which is ", b[j - 1], " is a match to the (", i + j - 1, ")th character from ", c, ", which is ", c[i + j - 1]);
+            if (a[i - 1] == c[i + j - 1] &&
+                b[j - 1] !== c[i + j - 1]) {
+                Mat[i][j] = Mat[i - 1][j]; //or could just say = true, right?
+                // console.log("Mat[", i, "][", j, "] is ", Mat[i][j]);
             }
             else {
-                if (a[i - 1] !== c[i - 1] &&
-                    b[j - 1] == c[j - 1]) {
-                    console.log("b and c match, a does not");
-                    Mat[i][j] = Mat[i][j - 1];
+                if (a[i - 1] !== c[i + j - 1] &&
+                    b[j - 1] == c[i + j - 1]) {
+                    // console.log("b and c match, a does not");
+                    Mat[i][j] = Mat[i][j - 1]; //or could just say = true, right?
+                    // console.log("Mat[", i, "][", j, "] is ", Mat[i][j]);
                 }
                 else {
-                    if (a[i - 1] == c[i - 1] &&
-                        b[j - 1] == c[j - 1]) {
-                        console.log("both are a match");
+                    if (a[i - 1] == c[i + j - 1] &&
+                        b[j - 1] == c[i + j - 1]) {
+                        // console.log("both are a match");
                         Mat[i][j] = (Mat[i - 1][j] || Mat[i][j - 1]);
+                        // console.log("Mat[", i, "][", j, "] is ", Mat[i][j]);
                     }
                     else {
                         Mat[i][j] = 0;
-                        console.log("This happens if there is no match");
+                        // console.log("This happens if there is no match");
+                        // console.log("Mat[", i, "][", j, "] is ", Mat[i][j]);
                     }
 
                 }
@@ -91,8 +101,9 @@ function isInterleaving(a, b, c) {
         }
     }
 
-    // return Mat[M][N];
-    // console.log("At the end", Mat);
+    console.log(Mat);
+    return Mat[M][N];
+
 
 };
 
